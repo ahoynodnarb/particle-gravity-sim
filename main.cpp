@@ -10,32 +10,30 @@
 #define FRAME_STEPS 400
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 700
-#define ZOOM_FACTOR 10.0
-#define N_MAX_TRAILS 200 * 3
+#define ZOOM_FACTOR 3.5
+#define N_MAX_TRAILS 400 * 3
 
 using namespace p_sim;
 int main() {
-  double mass_1 = 1e7;
-  double mass_2 = 1e4;
-  double mass_3 = 5e3;
+  double mass_1 = 1e10;
+  double mass_2 = 1e8;
+  double mass_3 = 5e8;
 
   vec2 x_0_1 = vec2(0, 0);
-  vec2 x_0_2 = vec2(9, 9);
-  vec2 x_0_3 = vec2(4, 4);
+  vec2 x_0_2 = vec2(30, 20);
+  vec2 x_0_3 = vec2(45, -50);
 
   vec2 v_0_1 = vec2(0.01, -0.01);
-  vec2 v_0_2 = vec2(0.005, -0.005);
-  vec2 v_0_3 = vec2(0.005, -0.005);
 
-  // vec2 r2 = x_0_2 - x_0_1;
-  // vec2 tangent_vec2 = normalize(vec2(r2.y, -r2.x));
-  // double orbit_velocity_2 = sqrt(G * mass_1 / norm(r2));
-  // vec2 v_0_2 = tangent_vec2 * orbit_velocity_2;
+  vec2 r2 = x_0_2 - x_0_1;
+  vec2 tangent_vec2 = unit(vec2(r2.y, -r2.x));
+  double orbit_velocity_2 = sqrt(G * mass_1 / norm(r2));
+  vec2 v_0_2 = tangent_vec2 * orbit_velocity_2;
 
-  // vec2 r3 = x_0_3 - x_0_1;
-  // vec2 tangent_vec3 = normalize(vec2(r3.y, -r3.x));
-  // double orbit_velocity_3 = sqrt(G * mass_1 / norm(r3));
-  // vec2 v_0_3 = tangent_vec3 * orbit_velocity_3;
+  vec2 r3 = x_0_3 - x_0_1;
+  vec2 tangent_vec3 = unit(vec2(r3.y, -r3.x));
+  double orbit_velocity_3 = sqrt(G * mass_1 / norm(r3));
+  vec2 v_0_3 = tangent_vec3 * orbit_velocity_3;
 
   vec2 a_0_1;
   vec2 a_0_2;
