@@ -1,5 +1,4 @@
 #include <raylib.h>
-#include <vector>
 
 #include "particle.h"
 #include "renderer.h"
