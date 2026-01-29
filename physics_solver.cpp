@@ -68,13 +68,13 @@ void p_sim::apply_gravity(particle &p, particle &q) {
   }
 }
 
-void physics_solver::add_particle(const particle &p) {
-  particles_.push_back(p);
+void physics_solver::add_particle(const std::unique_ptr<particle> &p) {
+  particles_.push_back(std::ref(*p));
 }
-const std::vector<particle> &physics_solver::get_particles() const {
+const std::vector<std::reference_wrapper<particle>> &
+physics_solver::get_particles() const {
   return particles_;
 }
-// TODO: Maybe an epsilon to check against the distance?
 void physics_solver::step() {
   for (size_t i = 0; i < particles_.size(); ++i) {
     particle &p = particles_[i];

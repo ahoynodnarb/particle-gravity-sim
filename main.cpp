@@ -44,10 +44,14 @@ int main() {
   particle p_3(x_0_3, v_0_3, a_0_3, 2.0, mass_3, false);
 
   physics_solver solver(DELTA_T);
-  solver.add_particle(p_1);
-  solver.add_particle(p_2);
-  solver.add_particle(p_3);
-  renderer graphics_renderer(solver, FPS, FRAME_STEPS,
+  auto p1_ptr = std::make_unique<particle>(p_1);
+  auto p2_ptr = std::make_unique<particle>(p_2);
+  auto p3_ptr = std::make_unique<particle>(p_3);
+  solver.add_particle(std::move(p1_ptr));
+  solver.add_particle(std::move(p2_ptr));
+  solver.add_particle(std::move(p3_ptr));
+  auto shared_solver = std::make_shared<physics_solver>(solver);
+  renderer graphics_renderer(shared_solver, FPS, FRAME_STEPS,
                              vec2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
                              ZOOM_FACTOR, N_MAX_TRAILS, WINDOW_WIDTH,
                              WINDOW_HEIGHT, "3 particle gravity");
