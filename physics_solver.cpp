@@ -5,7 +5,9 @@
 #include "vec2.h"
 
 using namespace p_sim;
-void apply_gravity(particle &p, particle &q) {
+// this just computes the gravitational force between each particle, finds the
+// distance vector, and applies the force in that direction
+void p_sim::apply_gravity(particle &p, particle &q) {
   vec2 r = p.x - q.x;
   double distance = norm(r);
   double g_force = G * p.mass * q.mass / (distance * distance);
@@ -32,13 +34,10 @@ void physics_solver::step() {
   }
   for (unsigned i = 0; i < particles_.size(); ++i) {
     particle &p = particles_[i];
-    // precompute parts of the leapfrog verlet for this timestep
-    // this is actually fine because the inner loop already accounts
-    // for both the action and reaction gravitational forces so the acceleration
-    // of the particle following the inner loop will be the final acceleration
-    // for the next timestep
-    vec2 x_step = p.v * time_delta + 0.5 * p.a * (time_delta * time_delta);
-    vec2 v_step = 0.5 * p.a * time_delta;
+    // since apply_gravity applies to both particles, each particle p has
+    // already accumulated all the gravitational forces for previous particles,
+    // and the inner loop accumulates the gravitational forces for the next
+    // particles stored
     for (unsigned j = i + 1; j < particles_.size(); ++j) {
       particle &q = particles_[j];
       if (p.fixed && q.fixed) {
@@ -47,11 +46,15 @@ void physics_solver::step() {
       apply_gravity(p, q);
     }
     // apply leapfrog
+    // since no more particles rely on any properties of particle p, we are
+    // completely safe to do the verlet step
     if (!p.fixed) {
-      v_step += 0.5 * p.a * time_delta;
+      vec2 &old_a = initial_accelerations[i];
+      vec2 x_step = p.v * time_delta + 0.5 * old_a * (time_delta * time_delta);
+      vec2 v_step = 0.5 * (old_a + p.a) * time_delta;
       p.x += x_step;
       p.v += v_step;
-      p.a = initial_accelerations[i];
+      p.a = old_a;
     }
   }
 }

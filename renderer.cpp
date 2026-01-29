@@ -20,29 +20,35 @@ void renderer::_draw_trails() {
     DrawCircle(x, y, 1, RED);
   }
 }
+void renderer::_update_draw_offset() {
+  if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
+    Vector2 mouse_delta = GetMouseDelta();
+    draw_offset_.x += mouse_delta.x;
+    draw_offset_.y += mouse_delta.y;
+  }
+}
+void renderer::_perform_physics_steps() {
+  for (unsigned i = 0; i < steps_per_frame_; ++i) {
+    solver_.step();
+  }
+  for (const auto &p : solver_.get_particles()) {
+    vec2 pos = p.x;
+    previous_positions_.push_back(pos);
+  }
+}
 void renderer::render() {
   InitWindow(window_width_, window_height_, window_title_.c_str());
   SetTargetFPS(target_fps_);
-  double original_delta = solver_.time_delta;
   while (!WindowShouldClose()) {
-    if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
-      Vector2 mouse_delta = GetMouseDelta();
-      draw_offset_.x += mouse_delta.x;
-      draw_offset_.y += mouse_delta.y;
-    }
+    _update_draw_offset();
+
     BeginDrawing();
     ClearBackground(BLACK);
     _draw_trails();
     _draw_particles();
     EndDrawing();
-    solver_.time_delta = original_delta * GetFrameTime();
-    for (unsigned i = 0; i < steps_per_frame_; ++i) {
-      solver_.step();
-    }
-    for (const auto &p : solver_.get_particles()) {
-      vec2 pos = p.x;
-      previous_positions_.push_back(pos);
-    }
+
+    _perform_physics_steps();
   }
   CloseWindow();
 }

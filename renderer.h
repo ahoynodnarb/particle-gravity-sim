@@ -23,6 +23,8 @@ private:
   std::vector<vec2> previous_positions_;
   void _draw_particles();
   void _draw_trails();
+  void _update_draw_offset();
+  void _perform_physics_steps();
 
 public:
   renderer(physics_solver &solver, double target_fps = 1.0 / 60.0,

@@ -6,7 +6,7 @@
 
 namespace p_sim {
 constexpr double G = 6.674e-5;
-void apply_gravity(particle &, particle &);
+extern void apply_gravity(particle &, particle &);
 class physics_solver {
 
 protected:

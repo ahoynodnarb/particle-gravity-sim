@@ -7,7 +7,7 @@
 
 #define FPS 30.0
 #define DELTA_T 1.0 / 20.0
-#define FRAME_STEPS 1000
+#define FRAME_STEPS 100
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 700
 
