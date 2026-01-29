@@ -8,14 +8,16 @@ using namespace p_sim;
 void renderer::_draw_particles() {
   for (auto &p : solver_.get_particles()) {
     vec2 pos = p.x;
-    DrawCircle((int)(20 * pos.x + draw_offset_.x),
-               (int)(20 * pos.y + draw_offset_.y), p.radius, WHITE);
+    int x = zoom_factor_ * pos.x + draw_offset_.x;
+    int y = zoom_factor_ * pos.y + draw_offset_.y;
+    DrawCircle(x, y, p.radius, WHITE);
   }
 }
 void renderer::_draw_trails() {
   for (auto &pos : previous_positions_) {
-    DrawCircle((int)(20 * pos.x + draw_offset_.x),
-               (int)(20 * pos.y + draw_offset_.y), 1, RED);
+    int x = zoom_factor_ * pos.x + draw_offset_.x;
+    int y = zoom_factor_ * pos.y + draw_offset_.y;
+    DrawCircle(x, y, 1, RED);
   }
 }
 void renderer::render() {

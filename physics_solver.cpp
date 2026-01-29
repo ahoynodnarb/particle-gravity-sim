@@ -17,15 +17,16 @@ void physics_solver::apply_gravity(particle &p, particle &q) {
   }
 }
 
-void physics_solver::add_particle(particle &p) { particles_.push_back(p); }
+void physics_solver::add_particle(const particle p) { particles_.push_back(p); }
 const std::vector<particle> &physics_solver::get_particles() const {
   return particles_;
 }
 // TODO: Maybe an epsilon to check against the distance?
 void physics_solver::step() {
-  vec2 initial_accelerations[particles_.size()];
-  for (int i = 0; i < particles_.size(); ++i) {
-    initial_accelerations[i] = vec2(particles_[i].a);
+  std::vector<vec2> initial_accelerations;
+  initial_accelerations.reserve(particles_.size());
+  for (const auto &p : particles_) {
+    initial_accelerations.push_back(vec2(p.a));
   }
   for (int i = 0; i < particles_.size(); ++i) {
     particle &p = particles_[i];
