@@ -7,7 +7,7 @@ using namespace p_sim;
 void renderer::_draw_particles() {
   for (const auto &p : solver_.get_particles()) {
     // raylib draws from the top left, but each particle's position is its
-    // center hence, shift both coordinates and shift y to get cartesian
+    // center. hence, shift both coordinates and flip y to get cartesian
     vec2 pos = p.x - p.radius;
     int x = zoom_factor_ * pos.x + draw_offset_.x;
     int y = -zoom_factor_ * pos.y + draw_offset_.y;

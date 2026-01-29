@@ -16,6 +16,17 @@ void p_sim::check_collision(particle &p, particle &q) {
   }
   vec2 n = unit(r);
   vec2 t = normal(n);
+  vec2 diff = n * ((p.radius + q.radius) - distance);
+
+  // corrects their positions if they intersect
+  if (p.fixed) {
+    q.x -= diff;
+  } else if (q.fixed) {
+    p.x += diff;
+  } else {
+    p.x += diff / 2.0;
+    q.x -= diff / 2.0;
+  }
   double p_proj_n, p_proj_t;
   double q_proj_n, q_proj_t;
   double m_q = 1e30, m_p = 1e30;
@@ -33,18 +44,14 @@ void p_sim::check_collision(particle &p, particle &q) {
   double v_p_n = (2 * m_q * q_proj_n + (m_p - m_q) * p_proj_n) / (m_q + m_p);
   double v_q_n = (2 * m_p * p_proj_n + (m_q - m_p) * q_proj_n) / (m_q + m_p);
 
-  p.v = v_p_n * n + p_proj_t * t;
-  q.v = v_q_n * n + q_proj_t * t;
+  vec2 v_p_final = v_p_n * n + p_proj_t * t;
+  vec2 v_q_final = v_q_n * n + q_proj_t * t;
 
-  // corrects their positions if they intersect
-  vec2 diff = n * ((p.radius + q.radius) - distance);
-  if (p.fixed) {
-    q.x -= diff;
-  } else if (q.fixed) {
-    p.x += diff;
-  } else {
-    q.x -= diff / 2.0;
-    p.x += diff / 2.0;
+  if (!p.fixed) {
+    p.v = v_p_final;
+  }
+  if (!q.fixed) {
+    q.v = v_q_final;
   }
 }
 // this just computes the gravitational force between each particle, finds the
