@@ -9,7 +9,7 @@
 namespace p_sim {
 class renderer {
 private:
-  std::shared_ptr<physics_solver> solver_;
+  physics_solver &solver_;
   int target_fps_;
   int steps_per_frame_;
 
@@ -28,7 +28,7 @@ private:
   void _perform_physics_steps();
 
 public:
-  renderer(std::shared_ptr<physics_solver> solver, int target_fps = 1.0 / 60.0,
+  renderer(physics_solver &solver, int target_fps = 1.0 / 60.0,
            int steps_per_frame = 1, const vec2 &draw_offset = {},
            double zoom_factor = 10.0, int max_n_trails = 1000,
            int window_width = 800, int window_height = 500,

@@ -11,14 +11,14 @@ extern void apply_gravity(particle &, particle &);
 class physics_solver {
 
 protected:
-  std::vector<std::reference_wrapper<particle>> particles_;
+  std::vector<std::unique_ptr<particle>> particles_;
 
 public:
   double time_delta;
 
   physics_solver(double time_delta = 1.0 / 60.0) : time_delta(time_delta) {}
-  void add_particle(const std::unique_ptr<particle> &);
-  const std::vector<std::reference_wrapper<particle>> &get_particles() const;
+  void add_particle(const std::unique_ptr<particle>);
+  const std::vector<std::unique_ptr<particle>> &get_particles() const;
   virtual void step();
 };
 } // namespace p_sim

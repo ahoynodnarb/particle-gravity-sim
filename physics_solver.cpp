@@ -68,16 +68,16 @@ void p_sim::apply_gravity(particle &p, particle &q) {
   }
 }
 
-void physics_solver::add_particle(const std::unique_ptr<particle> &p) {
-  particles_.push_back(std::ref(*p));
+void physics_solver::add_particle(std::unique_ptr<particle> p) {
+  particles_.emplace_back(std::move(p));
 }
-const std::vector<std::reference_wrapper<particle>> &
+const std::vector<std::unique_ptr<particle>> &
 physics_solver::get_particles() const {
   return particles_;
 }
 void physics_solver::step() {
   for (size_t i = 0; i < particles_.size(); ++i) {
-    particle &p = particles_[i];
+    particle &p = *particles_[i];
     vec2 x_step = p.v * time_delta + 0.5 * p.a * (time_delta * time_delta);
     vec2 v_step = 0.5 * p.a * time_delta;
     // since apply_gravity applies to both particles, each particle p has
@@ -85,7 +85,7 @@ void physics_solver::step() {
     // and the inner loop accumulates the gravitational forces for the next
     // particles stored
     for (size_t j = i + 1; j < particles_.size(); ++j) {
-      particle &q = particles_[j];
+      particle &q = *particles_[j];
       if (p.fixed && q.fixed) {
         continue;
       }

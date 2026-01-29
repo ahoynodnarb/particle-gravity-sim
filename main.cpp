@@ -50,8 +50,7 @@ int main() {
   solver.add_particle(std::move(p1_ptr));
   solver.add_particle(std::move(p2_ptr));
   solver.add_particle(std::move(p3_ptr));
-  auto shared_solver = std::make_shared<physics_solver>(solver);
-  renderer graphics_renderer(shared_solver, FPS, FRAME_STEPS,
+  renderer graphics_renderer(solver, FPS, FRAME_STEPS,
                              vec2(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2),
                              ZOOM_FACTOR, N_MAX_TRAILS, WINDOW_WIDTH,
                              WINDOW_HEIGHT, "3 particle gravity");
