@@ -23,8 +23,12 @@ const std::vector<particle> &physics_solver::get_particles() const {
 }
 // TODO: Maybe an epsilon to check against the distance?
 void physics_solver::step() {
-  for (auto it_0 = particles_.begin(); it_0 != particles_.end(); ++it_0) {
-    particle &p = *it_0;
+  vec2 initial_accelerations[particles_.size()];
+  for (int i = 0; i < particles_.size(); ++i) {
+    initial_accelerations[i] = vec2(particles_[i].a);
+  }
+  for (int i = 0; i < particles_.size(); ++i) {
+    particle &p = particles_[i];
     // precompute parts of the leapfrog verlet for this timestep
     // this is actually fine because the inner loop already accounts
     // for both the action and reaction gravitational forces so the acceleration
@@ -32,8 +36,8 @@ void physics_solver::step() {
     // for the next timestep
     vec2 x_step = p.v * time_delta + 0.5 * p.a * (time_delta * time_delta);
     vec2 v_step = 0.5 * p.a * time_delta;
-    for (auto it_1 = std::next(it_0); it_1 != particles_.end(); ++it_1) {
-      particle &q = *it_1;
+    for (int j = i + 1; j < particles_.size(); ++j) {
+      particle &q = particles_[j];
       if (p.fixed && q.fixed) {
         continue;
       }
@@ -44,7 +48,7 @@ void physics_solver::step() {
       v_step += 0.5 * p.a * time_delta;
       p.x += x_step;
       p.v += v_step;
-      p.a = vec2(0, 0);
+      p.a = initial_accelerations[i];
     }
   }
 }
