@@ -27,7 +27,7 @@ const std::vector<particle> &physics_solver::get_particles() const {
 }
 // TODO: Maybe an epsilon to check against the distance?
 void physics_solver::step() {
-  for (unsigned i = 0; i < particles_.size(); ++i) {
+  for (size_t i = 0; i < particles_.size(); ++i) {
     particle &p = particles_[i];
     vec2 x_step = p.v * time_delta + 0.5 * p.a * (time_delta * time_delta);
     vec2 v_step = 0.5 * p.a * time_delta;
@@ -35,7 +35,7 @@ void physics_solver::step() {
     // already accumulated all the gravitational forces for previous particles,
     // and the inner loop accumulates the gravitational forces for the next
     // particles stored
-    for (unsigned j = i + 1; j < particles_.size(); ++j) {
+    for (size_t j = i + 1; j < particles_.size(); ++j) {
       particle &q = particles_[j];
       if (p.fixed && q.fixed) {
         continue;

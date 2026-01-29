@@ -27,7 +27,7 @@ void renderer::_update_draw_offset() {
   }
 }
 void renderer::_perform_physics_steps() {
-  for (unsigned i = 0; i < steps_per_frame_; ++i) {
+  for (size_t i = 0; i < steps_per_frame_; ++i) {
     solver_.step();
   }
   for (const auto &p : solver_.get_particles()) {
