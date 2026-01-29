@@ -28,7 +28,7 @@ void physics_solver::step() {
   std::vector<vec2> initial_accelerations;
   initial_accelerations.reserve(particles_.size());
   for (const auto &p : particles_) {
-    initial_accelerations.push_back(vec2(p.a));
+    initial_accelerations.push_back(p.a);
   }
   for (int i = 0; i < particles_.size(); ++i) {
     particle &p = particles_[i];
