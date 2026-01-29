@@ -5,7 +5,7 @@
 #include "vec2.h"
 
 using namespace p_sim;
-void physics_solver::apply_gravity(particle &p, particle &q) {
+void apply_gravity(particle &p, particle &q) {
   vec2 r = p.x - q.x;
   double distance = norm(r);
   double g_force = G * p.mass * q.mass / (distance * distance);

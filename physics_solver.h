@@ -5,14 +5,15 @@
 #include "particle.h"
 
 namespace p_sim {
-#define G 6.674e-5
+constexpr double G = 6.674e-5;
+void apply_gravity(particle &, particle &);
 class physics_solver {
+
 protected:
   std::vector<particle> particles_;
 
 public:
   double time_delta;
-  static void apply_gravity(particle &, particle &);
 
   physics_solver(double time_delta = 1.0 / 60.0) : time_delta(time_delta) {}
   void add_particle(const particle &);
