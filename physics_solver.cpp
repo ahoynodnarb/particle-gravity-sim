@@ -17,7 +17,9 @@ void physics_solver::apply_gravity(particle &p, particle &q) {
   }
 }
 
-void physics_solver::add_particle(const particle p) { particles_.push_back(p); }
+void physics_solver::add_particle(const particle &p) {
+  particles_.push_back(p);
+}
 const std::vector<particle> &physics_solver::get_particles() const {
   return particles_;
 }
