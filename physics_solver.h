@@ -14,9 +14,7 @@ public:
   double time_delta;
   static void apply_gravity(particle &, particle &);
 
-  physics_solver(double time_delta = 1.0 / 60.0,
-                 std::vector<particle> particles = {})
-      : time_delta(time_delta), particles_(std::move(particles)) {}
+  physics_solver(double time_delta = 1.0 / 60.0) : time_delta(time_delta) {}
   void add_particle(const particle &);
   const std::vector<particle> &get_particles() const;
   virtual void step();

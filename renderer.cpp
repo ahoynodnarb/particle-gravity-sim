@@ -6,7 +6,7 @@
 
 using namespace p_sim;
 void renderer::_draw_particles() {
-  for (auto &p : solver_.get_particles()) {
+  for (const auto &p : solver_.get_particles()) {
     vec2 pos = p.x;
     int x = zoom_factor_ * pos.x + draw_offset_.x;
     int y = zoom_factor_ * pos.y + draw_offset_.y;
@@ -14,7 +14,7 @@ void renderer::_draw_particles() {
   }
 }
 void renderer::_draw_trails() {
-  for (auto &pos : previous_positions_) {
+  for (const auto &pos : previous_positions_) {
     int x = zoom_factor_ * pos.x + draw_offset_.x;
     int y = zoom_factor_ * pos.y + draw_offset_.y;
     DrawCircle(x, y, 1, RED);
@@ -36,10 +36,10 @@ void renderer::render() {
     _draw_particles();
     EndDrawing();
     solver_.time_delta = original_delta * GetFrameTime();
-    for (int i = 0; i < steps_per_frame_; ++i) {
+    for (unsigned i = 0; i < steps_per_frame_; ++i) {
       solver_.step();
     }
-    for (auto &p : solver_.get_particles()) {
+    for (const auto &p : solver_.get_particles()) {
       vec2 pos = p.x;
       previous_positions_.push_back(pos);
     }

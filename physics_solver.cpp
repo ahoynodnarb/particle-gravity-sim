@@ -30,7 +30,7 @@ void physics_solver::step() {
   for (const auto &p : particles_) {
     initial_accelerations.push_back(p.a);
   }
-  for (int i = 0; i < particles_.size(); ++i) {
+  for (unsigned i = 0; i < particles_.size(); ++i) {
     particle &p = particles_[i];
     // precompute parts of the leapfrog verlet for this timestep
     // this is actually fine because the inner loop already accounts
@@ -39,7 +39,7 @@ void physics_solver::step() {
     // for the next timestep
     vec2 x_step = p.v * time_delta + 0.5 * p.a * (time_delta * time_delta);
     vec2 v_step = 0.5 * p.a * time_delta;
-    for (int j = i + 1; j < particles_.size(); ++j) {
+    for (unsigned j = i + 1; j < particles_.size(); ++j) {
       particle &q = particles_[j];
       if (p.fixed && q.fixed) {
         continue;
