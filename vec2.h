@@ -1,5 +1,7 @@
 #pragma once
 
+#include <iostream>
+
 namespace p_sim {
 struct vec2 {
   double x;

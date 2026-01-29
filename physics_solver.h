@@ -5,7 +5,7 @@
 #include "particle.h"
 
 namespace p_sim {
-constexpr double G = 6.674e-5;
+constexpr double G = 6.674e-11;
 extern void apply_gravity(particle &, particle &);
 class physics_solver {
 

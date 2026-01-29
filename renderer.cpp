@@ -32,6 +32,9 @@ void renderer::_perform_physics_steps() {
   }
   for (const auto &p : solver_.get_particles()) {
     vec2 pos = p.x;
+    if (previous_positions_.size() == max_n_trails_) {
+      previous_positions_.pop_front();
+    }
     previous_positions_.push_back(pos);
   }
 }
