@@ -5,7 +5,7 @@
 #include "renderer.h"
 #include "vec2.h"
 
-#define FPS 30.0
+#define FPS 30
 #define DELTA_T 1.0 / 20.0
 #define FRAME_STEPS 400
 #define WINDOW_WIDTH 1200

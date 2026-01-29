@@ -3,14 +3,14 @@
 #include "physics_solver.h"
 #include "vec2.h"
 
+#include <deque>
 #include <string>
-#include <vector>
 
 namespace p_sim {
 class renderer {
 private:
   physics_solver &solver_;
-  double target_fps_;
+  int target_fps_;
   int steps_per_frame_;
 
   int window_width_;
@@ -28,7 +28,7 @@ private:
   void _perform_physics_steps();
 
 public:
-  renderer(physics_solver &solver, double target_fps = 1.0 / 60.0,
+  renderer(physics_solver &solver, int target_fps = 1.0 / 60.0,
            int steps_per_frame = 1, const vec2 &draw_offset = {},
            double zoom_factor = 10.0, int max_n_trails = 1000,
            int window_width = 800, int window_height = 500,
