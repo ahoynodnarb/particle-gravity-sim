@@ -7,7 +7,7 @@
 #include <string>
 
 namespace p_sim {
-class renderer {
+class simulator {
 private:
   physics_solver &solver_;
   int target_fps_;
@@ -28,11 +28,11 @@ private:
   void _perform_physics_steps();
 
 public:
-  renderer(physics_solver &solver, int target_fps = 1.0 / 60.0,
-           int steps_per_frame = 1, const vec2 &draw_offset = {},
-           double zoom_factor = 10.0, int max_n_trails = 1000,
-           int window_width = 800, int window_height = 500,
-           std::string window_title = {})
+  simulator(physics_solver &solver, int target_fps = 1.0 / 60.0,
+            int steps_per_frame = 1, const vec2 &draw_offset = {},
+            double zoom_factor = 10.0, int max_n_trails = 1000,
+            int window_width = 800, int window_height = 500,
+            std::string window_title = {})
       : solver_(solver), target_fps_(target_fps),
         steps_per_frame_(steps_per_frame), draw_offset_(draw_offset),
         zoom_factor_(zoom_factor), max_n_trails_(max_n_trails),

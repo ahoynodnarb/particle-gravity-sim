@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(physics_sim)
 find_package(raylib QUIET)
-set(SOURCE_FILES vec2.cpp physics_solver.cpp renderer.cpp main.cpp)
+set(SOURCE_FILES vec2.cpp physics_solver.cpp simulator.cpp main.cpp)
 set(CMAKE_CXX_COMPILER /usr/bin/g++)
 set(CMAKE_GENERATOR "Make")
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
