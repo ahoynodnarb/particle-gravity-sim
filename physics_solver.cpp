@@ -69,7 +69,7 @@ void p_sim::apply_gravity(particle &p, particle &q) {
 }
 
 void physics_solver::add_particle(std::unique_ptr<particle> p) {
-  particles_.emplace_back(std::move(p));
+  particles_.push_back(std::move(p));
 }
 const std::vector<std::unique_ptr<particle>> &
 physics_solver::get_particles() const {

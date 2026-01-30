@@ -17,7 +17,7 @@ public:
   double time_delta;
 
   physics_solver(double time_delta = 1.0 / 60.0) : time_delta(time_delta) {}
-  void add_particle(const std::unique_ptr<particle>);
+  void add_particle(std::unique_ptr<particle>);
   const std::vector<std::unique_ptr<particle>> &get_particles() const;
   virtual void step();
 };

@@ -5,7 +5,7 @@
 
 using namespace p_sim;
 void simulator::_draw_particles() {
-  for (const auto &p : solver_.get_particles()) {
+  for (const auto &p : solver_->get_particles()) {
     // raylib draws from the top left, but each particle's position is its
     // center. hence, shift both coordinates and flip y to get cartesian
     vec2 pos = p->x - p->radius;
@@ -30,9 +30,9 @@ void simulator::_update_draw_offset() {
 }
 void simulator::_perform_physics_steps() {
   for (size_t i = 0; i < steps_per_frame_; ++i) {
-    solver_.step();
+    solver_->step();
   }
-  for (const auto &p : solver_.get_particles()) {
+  for (const auto &p : solver_->get_particles()) {
     vec2 pos = p->x;
     if (previous_positions_.size() == max_n_trails_) {
       previous_positions_.pop_front();
