@@ -58,7 +58,7 @@ void p_sim::check_collision(particle &p, particle &q) {
 // distance vector, and applies the force in that direction
 void p_sim::apply_gravity(particle &p, particle &q) {
   vec2 r = p.x - q.x;
-  double distance = norm(r);
+  double distance = std::max(norm(r), p.radius + q.radius);
   double g_force = G * p.mass * q.mass / (distance * distance);
   if (!p.fixed) {
     p.a += (g_force / p.mass) * (-r / distance);
