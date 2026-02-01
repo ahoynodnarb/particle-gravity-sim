@@ -7,7 +7,8 @@ struct vec2 {
   double x;
   double y;
 
-  vec2(double x = 0.0, double y = 0.0) : x(x), y(y) {};
+  vec2() : x(0.0), y(0.0) {};
+  vec2(double x, double y) : x(x), y(y) {};
   vec2 operator*(const vec2 &rhs) const { return vec2(x * rhs.x, y * rhs.y); }
   vec2 operator*(double rhs) const { return vec2(x * rhs, y * rhs); }
   friend vec2 operator*(double lhs, const vec2 &rhs) {
@@ -73,7 +74,7 @@ struct vec2 {
 extern double dot(const vec2 &, const vec2 &);
 extern double norm(const vec2 &, int);
 extern double norm(const vec2 &);
-extern vec2 unit(const vec2 &vec);
-extern vec2 normal(const vec2 &vec);
+extern vec2 unit(const vec2 &);
+extern vec2 normal(const vec2 &);
 } // namespace p_sim
-extern std::ostream &operator<<(std::ostream &out, const p_sim::vec2 &vec);
+extern std::ostream &operator<<(std::ostream &, const p_sim::vec2 &);

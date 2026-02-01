@@ -1,10 +1,10 @@
 #include <raylib.h>
 
-#include "particle.h"
-#include "simulator.h"
+#include "particle2d.h"
+#include "simulator2d.h"
 
 using namespace p_sim;
-void simulator::_draw_particles() {
+void simulator2d::_draw_particles() {
   for (const auto &p : solver_->get_particles()) {
     // raylib draws from the top left, but each particle's position is its
     // center. hence, shift both coordinates and flip y to get cartesian
@@ -14,21 +14,21 @@ void simulator::_draw_particles() {
     DrawCircle(x, y, zoom_factor_ * p->radius, WHITE);
   }
 }
-void simulator::_draw_trails() {
+void simulator2d::_draw_trails() {
   for (const auto &pos : previous_positions_) {
     int x = zoom_factor_ * pos.x + draw_offset_.x;
     int y = -zoom_factor_ * pos.y + draw_offset_.y;
     DrawCircle(x, y, zoom_factor_ * 1, RED);
   }
 }
-void simulator::_update_draw_offset() {
+void simulator2d::_update_draw_offset() {
   if (IsMouseButtonDown(MOUSE_BUTTON_LEFT)) {
     Vector2 mouse_delta = GetMouseDelta();
     draw_offset_.x += mouse_delta.x;
     draw_offset_.y += mouse_delta.y;
   }
 }
-void simulator::_perform_physics_steps() {
+void simulator2d::_perform_physics_steps() {
   for (size_t i = 0; i < steps_per_frame_; ++i) {
     solver_->step();
   }
@@ -40,7 +40,7 @@ void simulator::_perform_physics_steps() {
     previous_positions_.push_back(pos - p->radius);
   }
 }
-void simulator::render() {
+void simulator2d::render() {
   InitWindow(window_width_, window_height_, window_title_.c_str());
   SetTargetFPS(target_fps_);
   while (!WindowShouldClose()) {
